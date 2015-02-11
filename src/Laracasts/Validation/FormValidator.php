@@ -21,6 +21,11 @@ abstract class FormValidator {
 	protected $messages = [];
 
 	/**
+	 * @var array
+	 */
+	protected $customAttributes = [];
+
+	/**
 	 * @param ValidatorFactory $validator
 	 */
 	function __construct(ValidatorFactory $validator)
@@ -42,7 +47,8 @@ abstract class FormValidator {
 		$this->validation = $this->validator->make(
 			$formData,
 			$this->getValidationRules(),
-			$this->getValidationMessages()
+			$this->getValidationMessages(),
+			$this->getCustomAttributes()
 		);
 
 		if ($this->validation->fails())
@@ -51,6 +57,14 @@ abstract class FormValidator {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getCustomAttributes()
+	{
+		return $this->customAttributes;
 	}
 
 	/**
